@@ -33,16 +33,16 @@ This package has been created as a way to easily deploy a System-Of-Record. The 
 	1. <code> sudo sysctl -w vm.max_map_count=262144</code>
 
 ## Create and Assign Local User
-1. Create a local 'logs' group
+1. Create a local logs group
 	1. <code> groupadd -g 1001 logs </code>
-	1. Create a local user and add to 'logs' group
+	1. Create a local user and add to logs group
 1. <code> useradd -u 1001 -g 1001 logs </code>
 1. <code> chown -R logs:logs /logs </code>
 1. <code> chmod -R 750 /logs </code>
 
 ## Download Package
 1. <code> cd /opt/socops </code>
-1. <code> git clone ...... </code>
+1. <code> git clone git@github.com:guardsight/gsvsoc_docker-system-of-record.git </code>
 
 ## Build and Start
 1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
@@ -56,9 +56,16 @@ This package has been created as a way to easily deploy a System-Of-Record. The 
 1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
 1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' down </code>
 
-
 # Usage
 1. Grep through raw logs
+1. Use kibana dashboard via http://127.0.0.1:5601
+1. Use elastic queries via http://127.0.0.1:9200
+
+# Scheduled Tasks
+1. /etc/cron.daily/GSVSOC-logs-compress.sh
+	1. Runs daily and compresses the messages.log files in /logs/HOSTS
+1. /etc/cron.daily/GSVSOC-purge-es-data.sh
+	1. Runs daily and purges any elastic data older than 31 days
 
 # Debugging
 ## gsvsoc-system-of-record container bash access

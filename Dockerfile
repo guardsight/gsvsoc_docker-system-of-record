@@ -17,6 +17,7 @@ ADD syslog-ng.conf /etc/syslog-ng/syslog-ng.conf
 ADD conf.d/* /etc/syslog-ng/conf.d/
 
 ADD /cronjobs/daily/* /etc/cron.daily/
+ADD /cronjobs/hourly/* /etc/cron.hourly/
 
 RUN chmod +x /etc/cron.daily/GSVSOC-*
 
