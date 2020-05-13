@@ -46,7 +46,7 @@ This package has been created as a way to easily deploy a System-Of-Record. The 
 
 ## Build and Start
 1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
-1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
+1. <code> docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
 1. Wait up to 10 minutes for the startup process to complete
 1. Test using the following curl command
 	1. <code> curl -L http://127.0.0.1:5601 </code>
@@ -54,8 +54,23 @@ This package has been created as a way to easily deploy a System-Of-Record. The 
 
 ## Stop Container
 1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
-1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' down </code>
+1. <code> docker-compose -p 'gsvsoc-system-of-record' down </code>
 
+## Clean up Containers
+1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> bash docker-cleanup.sh </code>
+
+## Update
+1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> docker-compose -p 'gsvsoc-system-of-record' down </code>
+1. <code> bash docker-cleanup.sh </code>
+1. <code> git pull </code>
+1. <code> docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
+1. Wait up to 10 minutes for the startup process to complete
+1. Test using the following curl command
+	1. <code> curl -L http://127.0.0.1:5601 </code>
+	1. If you get a large response, then the platform is up.
+	
 # Usage
 1. Grep through raw logs
 1. Use kibana dashboard via http://127.0.0.1:5601
@@ -69,7 +84,7 @@ This package has been created as a way to easily deploy a System-Of-Record. The 
 
 # Debugging
 ## gsvsoc-system-of-record container bash access
-1. <code> sudo docker exec -it gsvsoc-system-of-record /bin/bash </code>
+1. <code> docker exec -it gsvsoc-system-of-record /bin/bash </code>
 
 ## Test Case
 1. The following is meant to be run from the parent machine

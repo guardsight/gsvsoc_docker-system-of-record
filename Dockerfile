@@ -16,8 +16,7 @@ RUN useradd -u 1001 -g 1001 logs
 ADD syslog-ng.conf /etc/syslog-ng/syslog-ng.conf
 ADD conf.d/* /etc/syslog-ng/conf.d/
 
-ADD /cronjobs/daily/* /etc/cron.daily/
-ADD /cronjobs/hourly/* /etc/cron.hourly/
+ADD cronjobs/daily/* /etc/cron.daily/
 
 RUN chmod +x /etc/cron.daily/GSVSOC-*
 
