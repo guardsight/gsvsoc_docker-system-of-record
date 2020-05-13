@@ -1,0 +1,79 @@
+# Synopsis
+This package has been created as a way to easily deploy a System-Of-Record. The logs will be kept on the parent system, so it will be maintained or accessible ouside of the docker container.
+
+# Prerequisites
+* Sudo access to a linux box
+* Internet access to download software
+* Access to GuardSight Github account
+
+# Installation
+
+## Install Prerequisites
+
+1. Install latest updates and docker
+	1. <code> sudo apt update </code>
+	1. <code> sudo apt-get install apt-transport-https ca-certificates curl software-properties-common </code>
+	1. <code> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - </code>
+	1. <code> sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs)  stable"</code>
+	1. <code> sudo apt update </code>
+	1. <code> sudo apt-get install docker-ce </code>
+1. Install Docker Compose
+	1. <code> sudo curl -L "https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname  -m)" -o /usr/local/bin/docker-compose </code>
+	1. <code> sudo chmod +x /usr/local/bin/docker-compose </code>
+1. Prep directories
+	1. <code> sudo mkdir -p /opt/socops </code>
+	1. <code> sudo mkdir -p /logs/HOSTS </code>
+1. Install git
+	1. <code> sudo apt install git </code>
+1. Install jq
+	1. <code> sudo apt install jq </code>
+
+## Configuration
+1. Make sure you have enough vm mappings available
+	1. <code> sudo sysctl -w vm.max_map_count=262144</code>
+
+## Create and Assign Local User
+1. Create a local 'logs' group
+	1. <code> groupadd -g 1001 logs </code>
+	1. Create a local user and add to 'logs' group
+1. <code> useradd -u 1001 -g 1001 logs </code>
+1. <code> chown -R logs:logs /logs </code>
+1. <code> chmod -R 750 /logs </code>
+
+## Download Package
+1. <code> cd /opt/socops </code>
+1. <code> git clone ...... </code>
+
+## Build and Start
+1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
+1. Wait up to 10 minutes for the startup process to complete
+1. Test using the following curl command
+	1. <code> curl -L http://127.0.0.1:5601 </code>
+	1. If you get a large response, then the platform is up.
+
+## Stop Container
+1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' down </code>
+
+
+# Usage
+1. Grep through raw logs
+
+# Debugging
+## gsvsoc-system-of-record container bash access
+1. <code> sudo docker exec -it gsvsoc-system-of-record /bin/bash </code>
+
+## Test Case
+1. The following is meant to be run from the parent machine
+1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 601  </code>
+1. <code> echo "testing_udp" | nc -ulW 1 127.0.0.1 514 </code>
+1. Wait at least 20 seconds, and then verify the log has appeared
+1. Check raw logs for existence
+	1. <code> zgrep -E "testing_(tcp)|(udp)" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>
+1. Check Elastic-Stack for existence
+	1. <code> curl -s -XGET http://127.0.0.1:9200/gsvsoc-es-$(date +"%F")/\_search?q=PROGRAM:testing_\* | jq .hits.total.value </code>
+	1. Make sure the value is at least 1
+
+# See
+* https://wiki.guardsight.com/wiki/Instruction:W-0021_-_How-To_Create_A_Syslog_Infrastructure
