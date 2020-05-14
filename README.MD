@@ -2,8 +2,10 @@
 This package has been created as a way to easily deploy a System-Of-Record. The logs will be kept on the parent system, so it will be maintained or accessible ouside of the docker container.
 
 # Overview
-This is a snapshot to help understand what is going on.
-Assume overview is running as a docker service on a physical host or virtual machine
+<p> This is a snapshot to help understand what is going on.
+Assume overview is running as a docker service on a physical host or virtual machine.
+</p>
+
 ![Overview](./images/Overview.png "Overview")
 
 # Hardware Requirements
