@@ -2,7 +2,12 @@
 This package has been created as a way to easily deploy a System-Of-Record. The logs will be kept on the parent system, so it will be maintained or accessible ouside of the docker container.
 
 # Overview
+This is a snapshot to help understand what is going on.
+Assume overview is running as a docker service on a physical host or virtual machine
 ![Overview](./images/Overview.png "Overview")
+
+# Hardware Requirements
+TODO
 
 # Prerequisites
 * Sudo access to a linux box
@@ -75,8 +80,26 @@ This package has been created as a way to easily deploy a System-Of-Record. The 
 	1. If you get a large response, then the platform is up.
 	
 # Usage
-1. Grep through raw logs
-1. Use kibana dashboard via http://127.0.0.1:5601
+
+## Raw logs
+<p> The logs are stored in /logs/HOSTS/{HOST}/{DATE}/messages.log[.gz]<br>
+You can grep or zgrep through these logs and correlate or filter down the data you want<br>
+NOTE: This data will be there until the data is moved or purged.
+</p>
+
+## Kibana
+<p>
+You are able to view the Kibana dashboard at http://127.0.0.1:5601 <br>
+The prebuilt visualizations are store at http://127.0.0.1:5601/TODO<br>
+NOTE: This data will be there for 31 days, then will automatically be purged.
+</p>
+
+## Elastic
+<p>
+You are able to access the raw elastic indexes at http://127.0.0.1:9200/gs-es-{DATE}<br>
+The data will also be available via the Kibana portal<br>
+NOTE: This data will be there for 31 days, then will automatically be purged.
+</p>
 1. Use elastic queries via http://127.0.0.1:9200
 
 # Scheduled Tasks
