@@ -1,6 +1,9 @@
 # Synopsis
 This package has been created as a way to easily deploy a System-Of-Record. The logs will be kept on the parent system, so it will be maintained or accessible ouside of the docker container.
 
+# Overview
+![Overview](.images/Overview.png "Overview")
+
 # Prerequisites
 * Sudo access to a linux box
 * Internet access to download software
