@@ -10,8 +10,8 @@ RUN echo deb http://download.opensuse.org/repositories/home:/laszlo_budai:/syslo
 
 RUN apt-get update && apt-get install -y syslog-ng syslog-ng-core syslog-ng-mod-java-http syslog-ng-mod-elastic syslog-ng-mod-java-common-lib syslog-ng-mod-java syslog-ng-mod-json
 
-RUN groupadd -g 1001 logs
-RUN useradd -u 1001 -g 1001 logs
+RUN groupadd -g 1111 logs
+RUN useradd -u 1111 -g 1111 logs
 
 ADD syslog-ng.conf /etc/syslog-ng/syslog-ng.conf
 ADD conf.d/* /etc/syslog-ng/conf.d/

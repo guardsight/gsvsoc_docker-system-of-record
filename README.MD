@@ -28,10 +28,10 @@ TODO
 	1. <code> sudo apt update </code>
 	1. <code> sudo apt-get install docker-ce </code>
 1. Install Docker Compose
-	1. <code> sudo curl -L "https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname  -m)" -o /usr/local/bin/docker-compose </code>
+	1. <code> sudo curl -L https://github.com/docker/compose/releases/latest -o /usr/local/bin/docker-compose </code>
 	1. <code> sudo chmod +x /usr/local/bin/docker-compose </code>
 1. Prep directories
-	1. <code> sudo mkdir -p /opt/socops </code>
+	1. <code> sudo mkdir -p /opt/secops </code>
 	1. <code> sudo mkdir -p /logs/HOSTS </code>
 1. Install git
 	1. <code> sudo apt install git </code>
@@ -44,18 +44,19 @@ TODO
 
 ## Create and Assign Local User
 1. Create a local logs group
-	1. <code> groupadd -g 1001 logs </code>
-	1. Create a local user and add to logs group
-1. <code> useradd -u 1001 -g 1001 logs </code>
-1. <code> chown -R logs:logs /logs </code>
-1. <code> chmod -R 750 /logs </code>
+	1. <code> groupadd -g 1111 logs </code>
+1. Create a local user and add to logs group
+	1. <code> useradd -u 1111 -g 1111 logs </code>
+1. Change ownership and permisisons of /logs directory
+	1. <code> chown -R logs:logs /logs </code>
+	1. <code> chmod -R 750 /logs </code>
 
 ## Download Package
-1. <code> cd /opt/socops </code>
+1. <code> cd /opt/secops </code>
 1. <code> git clone git@github.com:guardsight/gsvsoc_docker-system-of-record.git </code>
 
 ## Build and Start
-1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 1. <code> docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
 1. Wait up to 10 minutes for the startup process to complete
 1. Test using the following curl command
@@ -63,15 +64,15 @@ TODO
 	1. If you get a large response, then the platform is up.
 
 ## Stop Container
-1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 1. <code> docker-compose -p 'gsvsoc-system-of-record' down </code>
 
 ## Clean up Containers
-1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 1. <code> bash docker-cleanup.sh </code>
 
 ## Update
-1. <code> cd /opt/socops/gsvsoc_docker-system-of-record </code>
+1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 1. <code> docker-compose -p 'gsvsoc-system-of-record' down </code>
 1. <code> bash docker-cleanup.sh </code>
 1. <code> git pull </code>
