@@ -1,6 +1,9 @@
 # Synopsis
 This package has been created as a way to easily deploy a System-Of-Record. The logs will be kept on the parent system, so it will be maintained or accessible ouside of the docker container.
 
+# Roadmap
+See : https://github.com/guardsight/gsvsoc_docker-system-of-record/wiki/Roadmap
+
 # Overview
 <p> This is a snapshot to help understand what is going on.
 Assume overview is running as a docker service on a physical host or virtual machine.
