@@ -14,7 +14,6 @@ TODO
 # Prerequisites
 * Sudo access to a linux box
 * Internet access to download software
-* Access to GuardSight Github account
 
 # Installation
 
@@ -33,10 +32,8 @@ TODO
 1. Prep directories
 	1. <code> sudo mkdir -p /opt/secops </code>
 	1. <code> sudo mkdir -p /logs/HOSTS </code>
-1. Install git
-	1. <code> sudo apt install git </code>
-1. Install jq
-	1. <code> sudo apt install jq </code>
+1. Install git and jq
+	1. <code> sudo apt install git jq </code>
 
 ## Configuration
 1. Make sure you have enough vm mappings available
