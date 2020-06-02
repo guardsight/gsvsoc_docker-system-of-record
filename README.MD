@@ -17,7 +17,7 @@ TODO
 
 # Installation
 
-## Install Prerequisites
+## Install Dependencies
 
 1. Install latest updates and docker
 	1. <code> sudo apt update </code>
