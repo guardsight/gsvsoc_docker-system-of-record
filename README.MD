@@ -127,4 +127,4 @@ NOTE: This data will be there for 31 days, then will automatically be purged.
 	1. Make sure the value is at least 1
 
 # See
-* https://wiki.guardsight.com/wiki/Instruction:W-0021_-_How-To_Create_A_Syslog_Infrastructure
+* Instruction:W-0021_-_How-To_Create_A_Syslog_Infrastructure
