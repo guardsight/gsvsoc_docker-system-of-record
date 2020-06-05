@@ -53,7 +53,7 @@ TODO
 
 ## Download Package
 1. <code> cd /opt/secops </code>
-1. <code> git clone git@github.com:guardsight/gsvsoc_docker-system-of-record.git </code>
+1. <code> git clone https://github.com/guardsight/gsvsoc_docker-system-of-record.git </code>
 
 ## Build and Start
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
