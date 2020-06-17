@@ -55,7 +55,7 @@ Assume overview is running as a docker service on a physical host or virtual mac
 	1. <code> sudo chmod 770 /opt/secops </code>
 	1. <code> sudo usermod -aG logs $(whoami)</code>
 1. Refresh user groups
-	1. su - $(whoami)
+	1. <code>su - $(whoami)</code>
 
 ## Download Package
 1. <code> cd /opt/secops </code>
