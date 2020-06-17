@@ -61,7 +61,7 @@ Assume overview is running as a docker service on a physical host or virtual mac
 
 ## Download Package
 1. <code> cd /opt/secops </code>
-1. <code> git clone git@github.com:guardsight/gsvsoc_docker-system-of-record.git </code>
+1. <code> git clone https://github.com/guardsight/gsvsoc_docker-system-of-record.git </code>
 
 ## Customize
 1. Open and modify the sections in create_docker_compose.sh, then run it
