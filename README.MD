@@ -1,5 +1,5 @@
 # Synopsis
-This package has been created as a way to easily deploy a System-Of-Record. The logs will be kept on the parent system so they will be maintained and accessible ouside of the docker container.
+This package has been created as a way to easily deploy a containerized central logging server. The heirarchy is meant as a modular system. Take what you want and leave what you don't. The logs will be kept on the parent system so they will be maintained and accessible ouside of the docker container.
 
 # Roadmap
 See : https://github.com/guardsight/gsvsoc_docker-system-of-record/wiki/Roadmap
@@ -12,7 +12,8 @@ Assume overview is running as a docker service on a physical host or virtual mac
 ![Overview](./images/Overview.png "Overview")
 
 # Hardware Requirements
-TODO
+* Memory : At minimum 8GB of ram. Provision additional RAM as needed.
+* Processor : At minimum 4 cores.
 
 # Prerequisites
 * Sudo access to a linux box
@@ -30,7 +31,8 @@ TODO
 	1. <code> sudo apt update </code>
 	1. <code> sudo apt-get install docker-ce </code>
 1. Install Docker Compose
-	1. <code> sudo curl -L https://github.com/docker/compose/releases/latest -o /usr/local/bin/docker-compose </code>
+	1. <code> sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+ </code>
 	1. <code> sudo chmod +x /usr/local/bin/docker-compose </code>
 1. Prep directories
 	1. <code> sudo mkdir -p /opt/secops </code>
@@ -42,18 +44,29 @@ TODO
 1. Make sure you have enough vm mappings available
 	1. <code> sudo sysctl -w vm.max_map_count=262144</code>
 
-## Create and Assign Local User
+## Set up permissions
 1. Create a local logs group
-	1. <code> groupadd -g 1111 logs </code>
+	1. <code> sudo groupadd -g 1111 logs </code>
 1. Create a local user and add to logs group
-	1. <code> useradd -u 1111 -g 1111 logs </code>
-1. Change ownership and permisisons of /logs directory
-	1. <code> chown -R logs:logs /logs </code>
-	1. <code> chmod -R 750 /logs </code>
+	1. <code> sudo useradd -u 1111 -g 1111 logs </code>
+	1. <code>
+1. Change ownership and permisisons of /logs and /opt/secops directories
+	1. <code> sudo chown -R logs:logs /logs </code>
+	1. <code> sudo chmod -R 750 /logs </code>
+	1. <code> sudo chown logs:logs /opt/secops </code>
+	1. <code> sudo chmod 770 /opt/secops </code>
+	1. <code> sudo usermod -aG logs $(whoami)</code>
+1. Refresh user groups
+	1. su - $(whoami)
 
 ## Download Package
 1. <code> cd /opt/secops </code>
 1. <code> git clone git@github.com:guardsight/gsvsoc_docker-system-of-record.git </code>
+
+## Customize
+1. Open and modify the sections in create_docker_compose.sh, then run it
+1. This is a required step, regardless of customization
+1. <code>./create_docker_compose.sh</code>
 
 ## Build and Start
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
@@ -61,11 +74,11 @@ TODO
 1. Wait up to 10 minutes for the startup process to complete
 1. Test using the following curl command
 	1. <code> curl -L http://127.0.0.1:5601 </code>
-	1. If you get a large response, then the platform is up.
+	1. If you get a large response, then the platform is up
 
 ## Stop Container
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
-1. <code> docker-compose -p 'gsvsoc-system-of-record' down </code>
+1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' down </code>
 
 ## Clean up Containers
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
@@ -73,10 +86,10 @@ TODO
 
 ## Update
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
-1. <code> docker-compose -p 'gsvsoc-system-of-record' down </code>
+1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' down </code>
 1. <code> bash docker-cleanup.sh </code>
 1. <code> git pull </code>
-1. <code> docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
+1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
 1. Wait up to 10 minutes for the startup process to complete
 1. Test using the following curl command
 	1. <code> curl -L http://127.0.0.1:5601 </code>
@@ -113,12 +126,12 @@ NOTE: This data will be there for 31 days, then will automatically be purged.
 
 # Debugging
 ## gsvsoc-system-of-record container bash access
-1. <code> docker exec -it gsvsoc-system-of-record /bin/bash </code>
+1. <code> sudo docker exec -it gsvsoc-system-of-record /bin/bash </code>
 
 ## Test Case
 1. The following is meant to be run from the parent machine
 1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 601  </code>
-1. <code> echo "testing_udp" | nc -ulW 1 127.0.0.1 514 </code>
+1. <code> echo "testing_udp" | nc -uw1 127.0.0.1 514 </code>
 1. Wait at least 20 seconds, and then verify the log has appeared
 1. Check raw logs for existence
 	1. <code> zgrep -E "testing_(tcp)|(udp)" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>

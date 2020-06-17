@@ -1,0 +1,3 @@
+networks:
+  elastic-network:
+    driver: bridge

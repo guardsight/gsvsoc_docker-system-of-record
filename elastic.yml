@@ -1,0 +1,19 @@
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    container_name: elastic-container-1
+    environment:
+      - node.name=elastic
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=elastic
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic-network

@@ -27,4 +27,4 @@ WORKDIR /logs/HOSTS
 
 HEALTHCHECK --interval=2m --timeout=3s --start-period=30s CMD /usr/sbin/syslog-ng-ctl stats || exit 1
 
-ENTRYPOINT ["/usr/sbin/syslog-ng", "-F"]
+ENTRYPOINT ["/usr/sbin/syslog-ng", "-Fevdt"]
