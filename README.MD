@@ -8,8 +8,7 @@ See : https://github.com/guardsight/gsvsoc_docker-system-of-record/wiki/Roadmap
 <p> This is a snapshot to help understand what is going on.
 Assume overview is running as a docker service on a physical host or virtual machine.
 </p>
-
-![Overview](./images/Overview.png "Overview" | width=400)
+<img src="https://github.com/guardsight/gsvsoc_docker-system-of-record/blob/develop/images/Overview.png" width="400" height="736">
 
 # Hardware Requirements
 * Memory : At minimum 8GB of ram. Provision additional RAM as needed.
