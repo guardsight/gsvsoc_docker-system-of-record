@@ -48,7 +48,6 @@ Assume overview is running as a docker service on a physical host or virtual mac
 	1. <code> sudo groupadd -g 1111 logs </code>
 1. Create a local user and add to logs group
 	1. <code> sudo useradd -u 1111 -g 1111 logs </code>
-	1. <code>
 1. Change ownership and permisisons of /logs and /opt/secops directories
 	1. <code> sudo chown -R logs:logs /logs </code>
 	1. <code> sudo chmod -R 750 /logs </code>
