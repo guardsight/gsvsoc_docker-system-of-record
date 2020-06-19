@@ -15,7 +15,7 @@ Assume overview is running as a docker service on a physical host or virtual mac
 * Processor : At minimum 4 cores.
 
 # Prerequisites
-* Sudo access to a linux box
+* Sudo access to a debian linux box
 * Internet access to download software
 
 # Installation
@@ -104,8 +104,7 @@ NOTE: This data will be there until the data is moved or purged.
 ## Kibana
 <p>
 You are able to view the Kibana dashboard at http://127.0.0.1:5601 <br>
-The prebuilt visualizations are store at http://127.0.0.1:5601/TODO<br>
-NOTE: This data will be there for 31 days, then will automatically be purged.
+If you would like to use pre build dashboards, [https://github.com/rocknsm/rock-dashboards SEE https://github.com/rocknsm/rock-dashboards]<br>
 </p>
 
 ## Elastic
