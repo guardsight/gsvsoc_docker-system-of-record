@@ -129,8 +129,7 @@ NOTE: This data will be there for 31 days, then will automatically be purged.
 
 ## Test Case
 1. The following is meant to be run from the parent machine
-1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 601  </code>
-1. <code> echo "testing_udp" | nc -uw1 127.0.0.1 514 </code>
+1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 5044  </code>
 1. Wait at least 20 seconds, and then verify the log has appeared
 1. Check raw logs for existence
 	1. <code> zgrep -E "testing_(tcp)|(udp)" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>
