@@ -30,8 +30,7 @@ Assume overview is running as a docker service on a physical host or virtual mac
 	1. <code> sudo apt update </code>
 	1. <code> sudo apt-get install docker-ce </code>
 1. Install Docker Compose
-	1. <code> sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
- </code>
+	1. <code> sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose </code>
 	1. <code> sudo chmod +x /usr/local/bin/docker-compose </code>
 1. Prep directories
 	1. <code> sudo mkdir -p /opt/secops </code>
