@@ -17,6 +17,7 @@ Assume overview is running as a docker service on a physical host or virtual mac
 # Prerequisites
 * Sudo access to a debian linux box
 * Internet access to download software
+* The instructions below are for an Ubuntu 16+ distribution, they can be modified for a CentOS installation.
 
 # Installation
 
@@ -55,10 +56,12 @@ Assume overview is running as a docker service on a physical host or virtual mac
 	1. <code> sudo usermod -aG logs $(whoami)</code>
 1. Refresh user groups
 	1. <code>su - $(whoami)</code>
+	1. Note: if this is an issue, log off the machine and log back on.
 
 ## Download Package
 1. <code> cd /opt/secops </code>
 1. <code> git clone https://github.com/guardsight/gsvsoc_docker-system-of-record.git </code>
+1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 
 ## Customize
 1. Open and modify the sections in create_docker_compose.sh, then run it
@@ -67,7 +70,7 @@ Assume overview is running as a docker service on a physical host or virtual mac
 
 ## Build and Start
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
-1. <code> docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
+1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
 1. Wait up to 10 minutes for the startup process to complete
 1. Test using the following curl command
 	1. <code> curl -L http://127.0.0.1:5601 </code>
@@ -132,7 +135,7 @@ NOTE: This data will be there for 31 days, then will automatically be purged.
 1. Check raw logs for existence
 	1. <code> zgrep -E "testing_(tcp)|(udp)" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>
 1. Check Elastic-Stack for existence
-	1. <code> curl -s -XGET http://127.0.0.1:9200/gsvsoc-es-$(date +"%F")/\_search?q=PROGRAM:testing_\* | jq .hits.total.value </code>
+	1. <code> curl -s -XGET http://127.0.0.1:9200/gsvsoc-es-$(date +"%F")/\_search?q=testing_\* | jq .hits.total.value </code>
 	1. Make sure the value is at least 1
 
 # See

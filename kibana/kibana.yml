@@ -1,0 +1,4 @@
+# Default Settings
+server.name: kibana
+server.host: 0.0.0.0
+elasticsearch.hosts: [ "http://elasticsearch-1:9200" ]

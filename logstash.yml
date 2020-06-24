@@ -1,0 +1,21 @@
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.6.2
+    container_name: logstash-1
+    volumes:
+      - type: bind
+        source: ./logstash/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./logstash/io_filters
+        target: /usr/share/logstash/pipeline
+        read_only: true
+      - /logs/HOSTS:/logs/HOSTS:rw
+    ports:
+      - "9600:9600/tcp"
+    environment:
+      - "LS_JAVA_OPTS=-Xmx1G -Xms1G"
+    networks:
+      - elastic-network
+    depends_on:
+      - elasticsearch

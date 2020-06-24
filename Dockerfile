@@ -1,14 +1,12 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER Nathan Coats <ncoats@guardsight.com>
 
-RUN apt-get update && apt-get install -y wget gnupg2 nano curl net-tools
+RUN apt update && apt install -y wget gnupg2 nano curl net-tools
 
-ADD Release.key /tmp/Release.key
-RUN /usr/bin/apt-key add /tmp/Release.key
+RUN wget -qO - https://download.opensuse.org/repositories/home:/laszlo_budai:/syslog-ng/xUbuntu_20.04/Release.key | apt-key add -
+RUN echo 'deb http://download.opensuse.org/repositories/home:/laszlo_budai:/syslog-ng/xUbuntu_20.04 ./' | tee --append /etc/apt/sources.list.d/syslog-ng-obs.list
 
-RUN echo deb http://download.opensuse.org/repositories/home:/laszlo_budai:/syslog-ng/xUbuntu_18.04 ./ > /etc/apt/sources.list.d/syslog-ng.list
-
-RUN apt-get update && apt-get install -y syslog-ng syslog-ng-core syslog-ng-mod-java-http syslog-ng-mod-elastic syslog-ng-mod-java-common-lib syslog-ng-mod-java syslog-ng-mod-json
+RUN apt update && apt install -y --upgrade syslog-ng=3.27.1-2 syslog-ng-core=3.27.1-2 syslog-ng-mod-java-http=3.27.1-2  syslog-ng-mod-elastic=3.27.1-2  syslog-ng-mod-java-common-lib=3.27.1-2 syslog-ng-mod-java=3.27.1-2  syslog-ng-mod-json syslog-ng-mod-sql=3.27.1-2 syslog-ng-mod-mongodb=3.27.1-2
 
 RUN groupadd -g 1111 logs
 RUN useradd -u 1111 -g 1111 logs
