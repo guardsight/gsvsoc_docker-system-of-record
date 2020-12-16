@@ -43,12 +43,16 @@ Assume overview is running as a docker service on a physical host or virtual mac
 # Installation
 
 ## Install Dependencies
+### Single Script
+1. Run Installation
+1. <code> sudo bash ./setup-system-of-record.sh </code>
 
+### Manual
 1. Install latest updates and docker
 	1. <code> sudo apt update </code>
 	1. <code> sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common </code>
 	1. <code> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - </code>
-	1. <code> sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs)  stable"</code>
+	1. <code> sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</code>
 	1. <code> sudo apt update </code>
 	1. <code> sudo apt-get install -y docker-ce </code>
 1. Install Docker Compose
@@ -61,11 +65,11 @@ Assume overview is running as a docker service on a physical host or virtual mac
 1. Install git and jq
 	1. <code> sudo apt install -y git jq </code>
 
-## Configuration
+#### Configuration
 1. Make sure you have enough vm mappings available
 	1. <code> sudo sysctl -w vm.max_map_count=262144</code>
 
-## Set up permissions
+#### Set up permissions
 1. Create a local logs group
 	1. <code> sudo groupadd -g 1111 logs </code>
 1. Create a local user and add to logs group
@@ -80,20 +84,15 @@ Assume overview is running as a docker service on a physical host or virtual mac
 	1. <code>newgrp logs</code>
 	1. Note: if this is an issue, log off the machine and log back on.
 
-## Download Package
+#### Download Package
 1. <code> cd /opt/secops </code>
 1. <code> git clone https://github.com/guardsight/gsvsoc_docker-system-of-record.git </code>
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 
-## Copy PreBuilt Helper Scripts
+#### Copy Prebuilt Helper Scripts
 1. Add script file to profile.d
 	1. <code>sudo cp /opt/secops/gsvsoc_docker-system-of-record/99-infosec.sh /etc/profile.d/</code>
 	1. <code>sudo chmod +x /etc/profile.d/99-infosec.sh</code>
-
-## Customize
-1. Open and modify the sections in create_docker_compose.sh, then run it
-1. This is a required step, regardless of customization
-1. <code>./create_docker_compose.sh</code>
 
 ## Build and Start
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
