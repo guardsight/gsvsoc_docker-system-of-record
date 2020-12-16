@@ -25,19 +25,20 @@ Assume overview is running as a docker service on a physical host or virtual mac
 
 1. Install latest updates and docker
 	1. <code> sudo apt update </code>
-	1. <code> sudo apt-get install apt-transport-https ca-certificates curl software-properties-common </code>
+	1. <code> sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common </code>
 	1. <code> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - </code>
 	1. <code> sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs)  stable"</code>
 	1. <code> sudo apt update </code>
-	1. <code> sudo apt-get install docker-ce </code>
+	1. <code> sudo apt-get install -y docker-ce </code>
 1. Install Docker Compose
 	1. <code> sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose </code>
 	1. <code> sudo chmod +x /usr/local/bin/docker-compose </code>
 1. Prep directories
 	1. <code> sudo mkdir -p /opt/secops </code>
 	1. <code> sudo mkdir -p /logs/HOSTS </code>
+
 1. Install git and jq
-	1. <code> sudo apt install git jq </code>
+	1. <code> sudo apt install -y git jq </code>
 
 ## Configuration
 1. Make sure you have enough vm mappings available
@@ -55,13 +56,18 @@ Assume overview is running as a docker service on a physical host or virtual mac
 	1. <code> sudo chmod 770 /opt/secops </code>
 	1. <code> sudo usermod -aG logs $(whoami)</code>
 1. Refresh user groups
-	1. <code>su - $(whoami)</code>
+	1. <code>newgrp logs</code>
 	1. Note: if this is an issue, log off the machine and log back on.
 
 ## Download Package
 1. <code> cd /opt/secops </code>
 1. <code> git clone https://github.com/guardsight/gsvsoc_docker-system-of-record.git </code>
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
+
+## Copy PreBuilt Helper Scripts
+1. Add script file to profile.d
+	1. <code>sudo cp /opt/secops/gsvsoc_docker-system-of-record/99-infosec.sh /etc/profile.d/</code>
+	1. <code>sudo chmod +x /etc/profile.d/99-infosec.sh</code>
 
 ## Customize
 1. Open and modify the sections in create_docker_compose.sh, then run it
@@ -71,10 +77,7 @@ Assume overview is running as a docker service on a physical host or virtual mac
 ## Build and Start
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
-1. Wait up to 10 minutes for the startup process to complete
-1. Test using the following curl command
-	1. <code> curl -L http://127.0.0.1:5601 </code>
-	1. If you get a large response, then the platform is up
+1. The service should be up within 20 seconds
 
 ## Stop Container
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
@@ -90,53 +93,32 @@ Assume overview is running as a docker service on a physical host or virtual mac
 1. <code> bash docker-cleanup.sh </code>
 1. <code> git pull </code>
 1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
-1. Wait up to 10 minutes for the startup process to complete
-1. Test using the following curl command
-	1. <code> curl -L http://127.0.0.1:5601 </code>
-	1. If you get a large response, then the platform is up.
-	
+1. The service should be up within 20 seconds
+
 # Usage
 
 ## Raw logs
 <p> The logs are stored in /logs/HOSTS/{HOST}/{DATE}/messages.log[.gz]<br>
-You can grep or zgrep through these logs and correlate or filter down the data you want<br>
+You can zgrep through these logs and correlate or filter down the data you want<br>
 NOTE: This data will be there until the data is moved or purged.
 </p>
 
-## Kibana
-<p>
-You are able to view the Kibana dashboard at http://127.0.0.1:5601 <br>
-If you would like to use pre build dashboards, [https://github.com/rocknsm/rock-dashboards SEE https://github.com/rocknsm/rock-dashboards]<br>
-</p>
-
-## Elastic
-<p>
-You are able to access the raw elastic indexes at http://127.0.0.1:9200/gs-es-{DATE}<br>
-The data will also be available via the Kibana portal<br>
-NOTE: This data will be there for 31 days, then will automatically be purged.
-</p>
-1. Use elastic queries via http://127.0.0.1:9200
 
 # Scheduled Tasks
 1. /etc/cron.daily/GSVSOC-logs-compress.sh
 	1. Runs daily and compresses the messages.log files in /logs/HOSTS
-1. /etc/cron.daily/GSVSOC-purge-es-data.sh
-	1. Runs daily and purges any elastic data older than 31 days
 
 # Debugging
-## gsvsoc-system-of-record container bash access
-1. <code> sudo docker exec -it gsvsoc-system-of-record /bin/bash </code>
+## Follow container logs
+1. <code> sudo docker logs --follow syslog-ng</code>
 
 ## Test Case
 1. The following is meant to be run from the parent machine
-1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 5044  </code>
-1. <code> echo "testing_udp" | nc -uw1 127.0.0.1 514 </code>
+1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 614  </code>
+1. <code> echo "testing_udp" | nc -u -w1 127.0.0.1 514 </code>
 1. Wait at least 20 seconds, and then verify the log has appeared
 1. Check raw logs for existence
-	1. <code> zgrep -E "testing_(tcp)|(udp)" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>
-1. Check Elastic-Stack for existence
-	1. <code> curl -s -XGET http://127.0.0.1:9200/gsvsoc-es-$(date +"%F")/\_search?q=testing_\* | jq .hits.total.value </code>
-	1. Make sure the value is at least 1
+	1. <code> zgrep -E "testing_((tcp)|(udp))" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>
 
 # See
 * Instruction:W-0021_-_How-To_Create_A_Syslog_Infrastructure

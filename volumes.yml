@@ -1,4 +1,0 @@
-volumes:
-  raw-data:
-  es-data:
-  elasticsearch:
