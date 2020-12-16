@@ -29,6 +29,8 @@ Assume overview is running as a docker service on a physical host or virtual mac
                         |                    Fleet               |
                         ------------------------------------------
 </pre>
+
+
 # Hardware Requirements
 * Memory : At minimum 8GB of ram. Provision additional RAM as needed.
 * Processor : At minimum 4 cores.
