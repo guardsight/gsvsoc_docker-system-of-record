@@ -9,25 +9,25 @@ See : https://github.com/guardsight/gsvsoc_docker-system-of-record/wiki/Roadmap
 Assume overview is running as a docker service on a physical host or virtual machine.
 </p>
 <pre>	
-						-----------------------------------------
-						|										|
-			601/TCP		|		-------------					|
-			514/UDP		|	 	| Syslog-ng	|					|
-		Syslog In --->	| --->	|	Docker	|					|
-						|		| Container |					|
-						|		-------------					|
-						|				|						|
-			Flat File	|<--------------|						|
-/logs/HOSTS/$IP/$Date/*	|				|						|
-						|				|	-------------		|
-						|	 			--->|  Optional	|		| Optional Access Calls
-						| 					|	Docker	|		| <-------
-						|					| Containers|		|
-						|					-------------		|
-						|					Elastic				|
-						|					Kibana				|
-						|					Fleet				|
-						-----------------------------------------
+                        ------------------------------------------
+                        |                                        |
+            601/TCP     |        -------------                   |
+            514/UDP     |        | Syslog-ng |                   |
+        Syslog In --->  | --->   |    Docker |                   |
+                        |        | Container |                   |
+                        |        -------------                   |
+                        |                |                       |
+            Flat File   | <--------------|                       |
+/logs/HOSTS/$IP/$Date/* |                |                       |
+                        |                |    -------------      |
+                        |                 --->| Optional  |      | Optional Access Calls
+                        |                     |   Docker  |      | <-------
+                        |                     |Containers |      |
+                        |                     -------------      |
+                        |                    Elastic             |
+                        |                    Kibana              |
+                        |                    Fleet               |
+                        ------------------------------------------
 </pre>
 # Hardware Requirements
 * Memory : At minimum 8GB of ram. Provision additional RAM as needed.
