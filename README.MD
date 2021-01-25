@@ -123,6 +123,9 @@ You can zgrep through these logs and correlate or filter down the data you want<
 NOTE: This data will be there until the data is moved or purged.
 </p>
 
+# User Management
+<p> To read the messages without using sudoer permissions, you need to be added to the logs group.</p>
+1. sudo usermod -aG sudo USERNAME
 
 # Scheduled Tasks
 1. /etc/cron.daily/GSVSOC-logs-compress.sh
