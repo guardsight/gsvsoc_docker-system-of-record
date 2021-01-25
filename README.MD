@@ -138,7 +138,7 @@ NOTE: This data will be there until the data is moved or purged.
 1. <code> echo "testing_udp" | nc -u -w1 127.0.0.1 514 </code>
 1. Wait at least 20 seconds, and then verify the log has appeared
 1. Check raw logs for existence
-	1. <code> zgrep -E "testing_((tcp)|(udp))" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>
+	1. <code> zgrep -sE "testing_((tcp)|(udp))" /logs/HOSTS/\*/"$(date +'%F')"/\* </code>
 
 # See
 * Instruction:W-0021_-_How-To_Create_A_Syslog_Infrastructure
