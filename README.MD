@@ -127,6 +127,9 @@ NOTE: This data will be there until the data is moved or purged.
 # Scheduled Tasks
 1. /etc/cron.daily/GSVSOC-logs-compress.sh
 	1. Runs daily and compresses the messages.log files in /logs/HOSTS
+## Install CronJobs
+1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
+2. <code> sudo cp cronjobs/daily/* /etc/cron.daily/ </code>
 
 # Debugging
 ## Follow container logs
