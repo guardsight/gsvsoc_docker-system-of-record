@@ -23,3 +23,4 @@ git clone https://github.com/guardsight/gsvsoc_docker-system-of-record.git
 cd /opt/secops/gsvsoc_docker-system-of-record 
 sudo cp /opt/secops/gsvsoc_docker-system-of-record/99-infosec.sh /etc/profile.d/
 sudo chmod +x /etc/profile.d/99-infosec.sh
+sudo cp /opt/secops/gsvsoc_docker-system-of-record/cronjobs/daily/* /etc/cron.daily/
