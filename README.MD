@@ -134,7 +134,7 @@ NOTE: This data will be there until the data is moved or purged.
 
 ## Test Case
 1. The following is meant to be run from the parent machine
-1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 614  </code>
+1. <code> echo "testing_tcp"  | nc -w1 127.0.0.1 601  </code>
 1. <code> echo "testing_udp" | nc -u -w1 127.0.0.1 514 </code>
 1. Wait at least 20 seconds, and then verify the log has appeared
 1. Check raw logs for existence
