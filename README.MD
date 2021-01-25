@@ -105,12 +105,12 @@ Assume overview is running as a docker service on a physical host or virtual mac
 
 ## Clean up Containers
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
-1. <code> bash docker-cleanup.sh </code>
+1. <code> sudo bash docker-cleanup.sh </code>
 
 ## Update
 1. <code> cd /opt/secops/gsvsoc_docker-system-of-record </code>
 1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' down </code>
-1. <code> bash docker-cleanup.sh </code>
+1. <code> sudo bash docker-cleanup.sh </code>
 1. <code> git pull </code>
 1. <code> sudo docker-compose -p 'gsvsoc-system-of-record' up --build -d </code>
 1. The service should be up within 20 seconds
