@@ -3,6 +3,7 @@ services:
   syslog-ng:
     image: balabit/syslog-ng
     container_name: syslog-ng
+    restart: always
     volumes:
       - /logs:/logs
       - type: bind
