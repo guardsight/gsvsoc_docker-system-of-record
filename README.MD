@@ -1,5 +1,5 @@
 # Synopsis
-This package has been created as a way to easily deploy a containerized central logging server. The heirarchy is meant as a modular system. Take what you want and leave what you don't. The logs will be kept on the parent system so they will be maintained and accessible ouside of the docker container.
+This package has been created as a way to deploy a containerized central logging server quickly. The hierarchy is meant as a modular system. Logs are maintained on the central and accessible outside of the docker container. 
 
 # Roadmap
 See : https://github.com/guardsight/gsvsoc_docker-system-of-record/wiki/Roadmap
