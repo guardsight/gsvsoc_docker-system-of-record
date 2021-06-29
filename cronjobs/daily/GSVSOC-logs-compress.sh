@@ -29,7 +29,7 @@ log(){
 
 # find files named *.log with a specific modified time and skipping directories marked as $(date +%F) [today]
 # compress them, make them immutable, log results
-find -H /var/log/HOSTS/ -mmin +1440 -name "*.log" -exec $G -f '{}' \; -exec $G -l '{}.gz' \; -print 2>&1 | grep -v compressed | while read f; do 
+find -H /logs/HOSTS/ -mmin +1440 -name "*.log" -exec $G -f '{}' \; -exec $G -l '{}.gz' \; -print 2>&1 | grep -v compressed | while read f; do 
         stats=$(echo "${f}" | grep '%'); 
         echo "$f" | grep -q ' '; 
         if [ "$f" == "$stats" ]; then
