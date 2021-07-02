@@ -43,8 +43,9 @@ Assume overview is running as a docker service on a physical host or virtual mac
 # Installation
 
 ## Install Dependencies
+
 ### Single Script
-1. Run Installation
+1. Run the installation script
 1. <code> sudo bash ./setup-system-of-record.sh </code>
 
 ### Manual
